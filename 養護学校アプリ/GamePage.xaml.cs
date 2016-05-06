@@ -20,7 +20,7 @@ namespace 養護学校アプリ
     /// </summary>
     public partial class GamePage : Page
     {
-        private int CurrentWordcnt;  //現在フォーカスが当たっている文字の番号
+        private int CurrentWordcnt=0;  //現在フォーカスが当たっている文字の番号
        // private List<Button> questionList;  //問題のテキストを一文字ずついれるリスト
         private string QuestionText = "さかな"; //問題のテキスト。実際はファイルから読み込み
 
@@ -39,19 +39,20 @@ namespace 養護学校アプリ
                 Button btn = new Button();
                 btn.FontSize = 120;
                 btn.Content = QuestionText[i];
-                btn.Style = this.FindResource("ButtonStyle1") as Style;
+                btn.Style = this.FindResource("ButtonStyle2") as Style;
                 btn.Name = "btn" + i;
                 btn.Height = 200;
-                btn.Width = btn.Height;
+                btn.Width = btn.Height;                
                 //MouseButtonEventHandler mbeh=
                 btn.Click += new RoutedEventHandler(Question_Click);
                 btn.HorizontalAlignment = HorizontalAlignment.Center;
                 QuestionFrame.ColumnDefinitions.Add(ColumnArray[i]);
                 Grid.SetColumn(btn, i);
-                QuestionFrame.Children.Add(btn);                
+                btn.IsEnabled = false;
+                QuestionFrame.Children.Add(btn);
+                
             }
-
-            
+            QuestionFrame.Children[CurrentWordcnt].IsEnabled =true;
             
             
             shuffle(); //シャッフル
@@ -78,7 +79,7 @@ namespace 養護学校アプリ
                 Button btn = new Button();
                 btn.Style = this.FindResource("ButtonStyle1") as Style;
                 btn.Name = "dummybtn" + buttoncnt;
-                btn.Click+= new RoutedEventHandler(Question_Click);
+                btn.Click+= new RoutedEventHandler(dummy_Click);
                 int btnY = rnd.Next(((int)((Canvas)dummyCanvas).Height) - 100);
                 btn.Content = dummyChars[i];
                 dummyCanvas.Children.Add(btn);
@@ -174,6 +175,17 @@ namespace 養護学校アプリ
         private void dummy_Click(object sender, RoutedEventArgs e)
         {
             talking(((Button)sender).Content.ToString());
+
+            string answer=((Button)QuestionFrame.Children[CurrentWordcnt]).Content.ToString();
+            string select=((Button)sender).Content.ToString();
+            if ( answer==select)
+            {
+                MessageBox.Show("正解!!");
+            }
+            else
+            {
+                MessageBox.Show("不正解!!");
+            }
         }
 
 
