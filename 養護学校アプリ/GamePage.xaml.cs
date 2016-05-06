@@ -61,7 +61,7 @@ namespace 養護学校アプリ
                 btn.Content = QuestionText[CurrentQuestionCnt][i];
                 btn.Style = this.FindResource("ButtonStyle2") as Style;
                 btn.Name = "btn" + i;
-                btn.Height = 200;
+                btn.Height = 200-(ColumnArray.Length*4);
                 btn.Width = btn.Height;
                 btn.Click += new RoutedEventHandler(Question_Click);
                 btn.HorizontalAlignment = HorizontalAlignment.Center;
