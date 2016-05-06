@@ -66,7 +66,6 @@
             </Grid.ColumnDefinitions>
         </Grid>
         <Canvas Name="dummyCanvas" HorizontalAlignment="Left" Height="338" Margin="59,317,0,0" VerticalAlignment="Top" Width="1198"/>
-        <Button Content="シャッフル" HorizontalAlignment="Left" Margin="814,-11,0,0" VerticalAlignment="Top" Width="58" Height="43" Click="Button_Click"/>
 
     </Grid>
 </Page>

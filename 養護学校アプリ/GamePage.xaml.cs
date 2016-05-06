@@ -22,27 +22,41 @@ namespace 養護学校アプリ
     {
         private int CurrentWordcnt=0;  //現在フォーカスが当たっている文字の番号
        // private List<Button> questionList;  //問題のテキストを一文字ずついれるリスト
-        private string QuestionText = "さかな"; //問題のテキスト。実際はファイルから読み込み
+        private string[] QuestionText = {"さかな","しか","しらす","さんま"}; //問題のテキスト。実際はファイルから読み込み
+        private int CurrentQuestionCnt = 0; //現在の問題番号
+
 
         public GamePage()
         {
             InitializeComponent();
-
+            gen_question();
             //
             //グリッドを問題テキストの文字数だけ均等に分割（カラム）・カラムに問題の文字を一文字ずつ割り当て
             //特にいじる必要もないので変数やfor文に関する説明は割愛します
-            int ColumnNum=QuestionText.Length;                                      
-            ColumnDefinition[] ColumnArray =new ColumnDefinition[ColumnNum];     
-            for (int i=0; i < ColumnNum; i++)                                       
+            
+            
+            
+            
+            shuffle(); //シャッフル
+            
+
+        }
+
+        private void gen_question()
+        {
+            int ColumnNum = QuestionText[CurrentQuestionCnt].Length;
+            ColumnDefinition[] ColumnArray = new ColumnDefinition[ColumnNum];
+            QuestionFrame.ColumnDefinitions.Clear();
+            for (int i = 0; i < ColumnNum; i++)
             {
                 ColumnArray[i] = new ColumnDefinition();
                 Button btn = new Button();
                 btn.FontSize = 120;
-                btn.Content = QuestionText[i];
+                btn.Content = QuestionText[CurrentQuestionCnt][i];
                 btn.Style = this.FindResource("ButtonStyle2") as Style;
                 btn.Name = "btn" + i;
                 btn.Height = 200;
-                btn.Width = btn.Height;                
+                btn.Width = btn.Height;
                 //MouseButtonEventHandler mbeh=
                 btn.Click += new RoutedEventHandler(Question_Click);
                 btn.HorizontalAlignment = HorizontalAlignment.Center;
@@ -50,14 +64,9 @@ namespace 養護学校アプリ
                 Grid.SetColumn(btn, i);
                 btn.IsEnabled = false;
                 QuestionFrame.Children.Add(btn);
-                
-            }
-            QuestionFrame.Children[CurrentWordcnt].IsEnabled =true;
-            
-            
-            shuffle(); //シャッフル
-            
 
+            }
+            QuestionFrame.Children[CurrentWordcnt].IsEnabled = true;
         }
 
         //
@@ -98,7 +107,7 @@ namespace 養護学校アプリ
         //                                                                          //
         private char[] dummy_gen()
         {
-            char[] questionArray = QuestionText.ToCharArray();      //問題のテキストをchar型に変換
+            char[] questionArray = QuestionText[CurrentQuestionCnt].ToCharArray();      //問題のテキストをchar型に変換
             string dummys = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもられるれろやゆよわをん";  //ダミーになる文字達
             char[] dummysArray = dummys.ToCharArray();      //ダミー達、stringからchar配列に変身
            
@@ -124,7 +133,7 @@ namespace 養護学校アプリ
             Random rnd=new Random();    //randomオブジェクトの生成
 
 
-            char[] dummyExtract = new char[7-QuestionText.Length];  //実際に表舞台に出るダミー達の配列
+            char[] dummyExtract = new char[7 - QuestionText[CurrentQuestionCnt].Length];  //実際に表舞台に出るダミー達の配列
 
 
             for (int i=0; i < dummyExtract.Length; i++)                             //                         
@@ -155,16 +164,6 @@ namespace 養護学校アプリ
 
 
 
-        //シャッフルボタン、テスト時のみ使用//
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            dummyCanvas.Children.Clear();
-
-            shuffle();
-        }
-
-
-
         //問題ボタンをクリックしたら音声を再生
         private void Question_Click(object sender, RoutedEventArgs e)
         {
@@ -184,10 +183,17 @@ namespace 養護学校アプリ
                 ((Button)QuestionFrame.Children[CurrentWordcnt]).IsEnabled = false;
                 
                 CurrentWordcnt++;
-                if (CurrentWordcnt < QuestionText.Length)
+                if (CurrentWordcnt < QuestionText[CurrentQuestionCnt].Length)
                 {
                     ((Button)QuestionFrame.Children[CurrentWordcnt]).IsEnabled = true;
                     ((Button)sender).IsEnabled = false;
+                    
+                }
+                else
+                {
+
+                    Next();
+
                 }
             }
             else
@@ -196,6 +202,24 @@ namespace 養護学校アプリ
             }
         }
 
+
+        //次の問題へ
+        private void Next() {
+            for (int i = 0; i < dummyCanvas.Children.Count; i++)
+            {
+                ((Button)dummyCanvas.Children[i]).IsEnabled = false;
+            }
+            CurrentQuestionCnt++;
+            CurrentWordcnt = 0;
+            QuestionFrame.Children.Clear();
+            dummyCanvas.Children.Clear();
+            if (CurrentQuestionCnt >= QuestionText.Length) return;
+            gen_question();
+            shuffle();
+
+            
+            
+        }
 
 
         //再生する音声の設定
