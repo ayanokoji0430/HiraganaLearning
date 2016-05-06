@@ -20,14 +20,13 @@ namespace 養護学校アプリ
     /// </summary>
     public partial class GamePage : Page
     {
-        private int currentWordsCnt=0;  //現在フォーカスが当たっている文字の番号
+        private string CurrentWord = "";  //現在フォーカスが当たっている文字
        // private List<Button> questionList;  //問題のテキストを一文字ずついれるリスト
         private string QuestionText = "さかな"; //問題のテキスト。実際はファイルから読み込み
 
         public GamePage()
         {
             InitializeComponent();
-            
 
             //
             //グリッドを問題テキストの文字数だけ均等に分割（カラム）・カラムに問題の文字を一文字ずつ割り当て
@@ -43,14 +42,15 @@ namespace 養護学校アプリ
                 btn.Style = this.FindResource("ButtonStyle1") as Style;
                 btn.Name = "btn" + i;
                 btn.Height = 200;
-                btn.Width = btn.Height;                
+                btn.Width = btn.Height;
+                //MouseButtonEventHandler mbeh=
+                btn.Click += new RoutedEventHandler(Question_Click);
                 btn.HorizontalAlignment = HorizontalAlignment.Center;
                 QuestionFrame.ColumnDefinitions.Add(ColumnArray[i]);
                 Grid.SetColumn(btn, i);
                 QuestionFrame.Children.Add(btn);                
             }
 
-            ((Button)QuestionFrame.Children[0]).IsEnabled = false;  //関係ない//
             
             
             
@@ -78,7 +78,7 @@ namespace 養護学校アプリ
                 Button btn = new Button();
                 btn.Style = this.FindResource("ButtonStyle1") as Style;
                 btn.Name = "dummybtn" + buttoncnt;
-
+                btn.Click+= new RoutedEventHandler(dummy_Click);
                 int btnY = rnd.Next(((int)((Canvas)dummyCanvas).Height) - 100);
                 btn.Content = dummyChars[i];
                 dummyCanvas.Children.Add(btn);
@@ -154,13 +154,55 @@ namespace 養護学校アプリ
 
 
 
-
         //シャッフルボタン、テスト時のみ使用//
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             dummyCanvas.Children.Clear();
 
             shuffle();
+        }
+
+
+
+        //問題ボタンをクリックしたら音声を再生
+        private void Question_Click(object sender, RoutedEventArgs e)
+        {
+            talking(((Button)sender).Content.ToString());
+        }
+
+        //選択肢ボタンをクリックしたら音声を再生
+        private void dummy_Click(object sender, RoutedEventArgs e)
+        {
+            talking(((Button)sender).Content.ToString());
+        }
+
+
+
+        //再生する音声の設定
+        public void talking(string str)
+        {
+
+            var synthesizer = new System.Speech.Synthesis.SpeechSynthesizer();
+
+
+            var voices = synthesizer.GetInstalledVoices();
+
+
+            synthesizer.SelectVoice(voices[0].VoiceInfo.Name);
+
+
+            synthesizer.Volume = 100;
+
+
+            synthesizer.Rate = 0;
+
+            synthesizer.SpeakAsync(str);
+
+            synthesizer.SpeakCompleted += (s, arg) =>
+            {
+
+                synthesizer.Dispose();
+            };
         }
 
 
