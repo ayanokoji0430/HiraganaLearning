@@ -181,6 +181,14 @@ namespace 養護学校アプリ
             if ( answer==select)
             {
                 MessageBox.Show("正解!!");
+                ((Button)QuestionFrame.Children[CurrentWordcnt]).IsEnabled = false;
+                
+                CurrentWordcnt++;
+                if (CurrentWordcnt < QuestionText.Length)
+                {
+                    ((Button)QuestionFrame.Children[CurrentWordcnt]).IsEnabled = true;
+                    ((Button)sender).IsEnabled = false;
+                }
             }
             else
             {
