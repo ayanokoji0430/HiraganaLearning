@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Media;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,7 +25,10 @@ namespace 養護学校アプリ
        // private List<Button> questionList;  //問題のテキストを一文字ずついれるリスト
         private string[] QuestionText; //問題のテキスト。ファイルから読み込む
         private int CurrentQuestionCnt = 0; //現在の問題番号
-
+        private SoundPlayer wrong = new SoundPlayer(Properties.Resources._out);
+        private SoundPlayer right = new SoundPlayer(Properties.Resources.safe);
+        private SoundPlayer complete = new SoundPlayer(Properties.Resources.Complete);
+        private SoundPlayer deden = new SoundPlayer(Properties.Resources.deden);
 
         public GamePage()
         {
@@ -32,7 +36,6 @@ namespace 養護学校アプリ
             QuestionText = fr.showResult();
             InitializeComponent();
             gen_question();
-            
             
             
             
@@ -46,6 +49,7 @@ namespace 養護学校アプリ
         //特にいじる必要もないので変数やfor文に関する説明は割愛します
         private void gen_question()
         {
+            deden.Play();
             int ColumnNum = QuestionText[CurrentQuestionCnt].Length;
             ColumnDefinition[] ColumnArray = new ColumnDefinition[ColumnNum];
             QuestionFrame.ColumnDefinitions.Clear();
@@ -76,7 +80,7 @@ namespace 養護学校アプリ
         //
         public void shuffle()
         {
-
+            
             char[] dummyChars = dummy_gen();
             Random rnd = new Random();
             int buttoncnt = 7;
@@ -175,13 +179,14 @@ namespace 養護学校アプリ
         //選択肢ボタンをクリックしたら音声を再生
         private void dummy_Click(object sender, RoutedEventArgs e)
         {
-            talking(((Button)sender).Content.ToString());
+            //talking(((Button)sender).Content.ToString());
 
             string answer=((Button)QuestionFrame.Children[CurrentWordcnt]).Content.ToString();
             string select=((Button)sender).Content.ToString();
             if ( answer==select)
             {
                // MessageBox.Show("正解!!");
+                right.PlaySync();
                 ((Button)QuestionFrame.Children[CurrentWordcnt]).IsEnabled = false;
                 
                 CurrentWordcnt++;
@@ -193,7 +198,7 @@ namespace 養護学校アプリ
                 }
                 else
                 {
-
+                    complete.PlaySync();
                     Next();
 
                 }
@@ -201,6 +206,7 @@ namespace 養護学校アプリ
             else
             {
                 //MessageBox.Show("不正解!!");
+                wrong.Play();
             }
         }
 
@@ -255,6 +261,9 @@ namespace 養護学校アプリ
                 synthesizer.Dispose();
             };
         }
+
+
+        
 
 
     }
