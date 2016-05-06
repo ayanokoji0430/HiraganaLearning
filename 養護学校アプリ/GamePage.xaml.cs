@@ -21,8 +21,8 @@ namespace 養護学校アプリ
     public partial class GamePage : Page
     {
         private int currentWordsCnt=0;  //現在フォーカスが当たっている文字の番号
-        private List<Button> questionList;  //問題のテキストを一文字ずついれるリスト
-        private string QuestionText = "たけ"; //問題のテキスト。実際はファイルから読み込み
+       // private List<Button> questionList;  //問題のテキストを一文字ずついれるリスト
+        private string QuestionText = "さかな"; //問題のテキスト。実際はファイルから読み込み
 
         public GamePage()
         {
@@ -38,10 +38,12 @@ namespace 養護学校アプリ
             {
                 ColumnArray[i] = new ColumnDefinition();
                 Button btn = new Button();
-                btn.FontSize = 400/ColumnNum;
+                btn.FontSize = 120;
                 btn.Content = QuestionText[i];
                 btn.Style = this.FindResource("ButtonStyle1") as Style;
                 btn.Name = "btn" + i;
+                btn.Height = 200;
+                btn.Width = btn.Height;                
                 btn.HorizontalAlignment = HorizontalAlignment.Center;
                 QuestionFrame.ColumnDefinitions.Add(ColumnArray[i]);
                 Grid.SetColumn(btn, i);
@@ -82,7 +84,7 @@ namespace 養護学校アプリ
                 dummyCanvas.Children.Add(btn);
                 btn.Width = 100;
                 btn.Height = 100;
-                
+                btn.FontSize = 50;
 
                 ((Button)dummyCanvas.Children[i]).Margin = new Thickness(btnX, btnY, 0, 0);
                 plusXresult += plusX;
