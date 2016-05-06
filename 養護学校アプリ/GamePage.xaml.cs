@@ -210,10 +210,15 @@ namespace 養護学校アプリ
                 ((Button)dummyCanvas.Children[i]).IsEnabled = false;
             }
             CurrentQuestionCnt++;
+            if (CurrentQuestionCnt >= QuestionText.Length)
+            {
+                CurrentQuestionCnt = -1;
+                Next();
+            }
             CurrentWordcnt = 0;
             QuestionFrame.Children.Clear();
             dummyCanvas.Children.Clear();
-            if (CurrentQuestionCnt >= QuestionText.Length) return;
+            
             gen_question();
             shuffle();
 
