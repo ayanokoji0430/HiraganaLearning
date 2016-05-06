@@ -22,12 +22,14 @@ namespace 養護学校アプリ
     {
         private int CurrentWordcnt=0;  //現在フォーカスが当たっている文字の番号
        // private List<Button> questionList;  //問題のテキストを一文字ずついれるリスト
-        private string[] QuestionText = {"さかな","しか","しらす","さんま"}; //問題のテキスト。実際はファイルから読み込み
+        private string[] QuestionText; //問題のテキスト。実際はファイルから読み込み
         private int CurrentQuestionCnt = 0; //現在の問題番号
 
 
         public GamePage()
         {
+            FileRead fr = new FileRead();
+            QuestionText = fr.showResult();
             InitializeComponent();
             gen_question();
             //
@@ -57,7 +59,6 @@ namespace 養護学校アプリ
                 btn.Name = "btn" + i;
                 btn.Height = 200;
                 btn.Width = btn.Height;
-                //MouseButtonEventHandler mbeh=
                 btn.Click += new RoutedEventHandler(Question_Click);
                 btn.HorizontalAlignment = HorizontalAlignment.Center;
                 QuestionFrame.ColumnDefinitions.Add(ColumnArray[i]);
@@ -179,7 +180,7 @@ namespace 養護学校アプリ
             string select=((Button)sender).Content.ToString();
             if ( answer==select)
             {
-                MessageBox.Show("正解!!");
+               // MessageBox.Show("正解!!");
                 ((Button)QuestionFrame.Children[CurrentWordcnt]).IsEnabled = false;
                 
                 CurrentWordcnt++;
@@ -198,7 +199,7 @@ namespace 養護学校アプリ
             }
             else
             {
-                MessageBox.Show("不正解!!");
+                //MessageBox.Show("不正解!!");
             }
         }
 
