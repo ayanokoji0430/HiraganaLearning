@@ -20,7 +20,7 @@ namespace 養護学校アプリ
     /// </summary>
     public partial class GamePage : Page
     {
-        private string CurrentWord = "";  //現在フォーカスが当たっている文字
+        private int CurrentWordcnt;  //現在フォーカスが当たっている文字の番号
        // private List<Button> questionList;  //問題のテキストを一文字ずついれるリスト
         private string QuestionText = "さかな"; //問題のテキスト。実際はファイルから読み込み
 
@@ -78,7 +78,7 @@ namespace 養護学校アプリ
                 Button btn = new Button();
                 btn.Style = this.FindResource("ButtonStyle1") as Style;
                 btn.Name = "dummybtn" + buttoncnt;
-                btn.Click+= new RoutedEventHandler(dummy_Click);
+                btn.Click+= new RoutedEventHandler(Question_Click);
                 int btnY = rnd.Next(((int)((Canvas)dummyCanvas).Height) - 100);
                 btn.Content = dummyChars[i];
                 dummyCanvas.Children.Add(btn);
