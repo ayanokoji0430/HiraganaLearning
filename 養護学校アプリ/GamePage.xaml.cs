@@ -22,7 +22,7 @@ namespace 養護学校アプリ
     {
         private int CurrentWordcnt=0;  //現在フォーカスが当たっている文字の番号
        // private List<Button> questionList;  //問題のテキストを一文字ずついれるリスト
-        private string[] QuestionText; //問題のテキスト。実際はファイルから読み込み
+        private string[] QuestionText; //問題のテキスト。ファイルから読み込む
         private int CurrentQuestionCnt = 0; //現在の問題番号
 
 
@@ -32,9 +32,7 @@ namespace 養護学校アプリ
             QuestionText = fr.showResult();
             InitializeComponent();
             gen_question();
-            //
-            //グリッドを問題テキストの文字数だけ均等に分割（カラム）・カラムに問題の文字を一文字ずつ割り当て
-            //特にいじる必要もないので変数やfor文に関する説明は割愛します
+            
             
             
             
@@ -43,7 +41,9 @@ namespace 養護学校アプリ
             
 
         }
-
+        //
+        //グリッドを問題テキストの文字数だけ均等に分割（カラム）・カラムに問題の文字を一文字ずつ割り当て
+        //特にいじる必要もないので変数やfor文に関する説明は割愛します
         private void gen_question()
         {
             int ColumnNum = QuestionText[CurrentQuestionCnt].Length;
