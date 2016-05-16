@@ -54,6 +54,8 @@ ipch/
 *.sdf
 *.cachefile
 
+
+*.wav
 # Visual Studio profiler
 *.psess
 *.vsp

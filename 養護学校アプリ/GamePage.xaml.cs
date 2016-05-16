@@ -49,7 +49,7 @@ namespace 養護学校アプリ
         //特にいじる必要もないので変数やfor文に関する説明は割愛します
         private void gen_question()
         {
-            deden.Play();
+            //deden.Play();
             int ColumnNum = QuestionText[CurrentQuestionCnt].Length;
             ColumnDefinition[] ColumnArray = new ColumnDefinition[ColumnNum];
             QuestionFrame.ColumnDefinitions.Clear();
@@ -177,7 +177,7 @@ namespace 養護学校アプリ
         }
 
         //選択肢ボタンをクリックしたら音声を再生
-        private void dummy_Click(object sender, RoutedEventArgs e)
+        private async void dummy_Click(object sender, RoutedEventArgs e)
         {
             //talking(((Button)sender).Content.ToString());
 
@@ -199,6 +199,11 @@ namespace 養護学校アプリ
                 else
                 {
                     complete.PlaySync();
+                    await Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        Task.Run(() => talking(QuestionText[CurrentQuestionCnt]));
+                    }));
+                    await Task.Run(()=>System.Threading.Thread.Sleep(1000));
                     Next();
 
                 }
@@ -235,31 +240,10 @@ namespace 養護学校アプリ
         }
 
 
-        //再生する音声の設定
+        //音声合成を再生
         public void talking(string str)
         {
-
-            var synthesizer = new System.Speech.Synthesis.SpeechSynthesizer();
-
-
-            var voices = synthesizer.GetInstalledVoices();
-
-
-            synthesizer.SelectVoice(voices[0].VoiceInfo.Name);
-
-
-            synthesizer.Volume = 100;
-
-
-            synthesizer.Rate = 0;
-
-            synthesizer.SpeakAsync(str);
-
-            synthesizer.SpeakCompleted += (s, arg) =>
-            {
-
-                synthesizer.Dispose();
-            };
+            AquesTalk.Play(str,100);
         }
 
 
