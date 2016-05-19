@@ -179,14 +179,13 @@ namespace 養護学校アプリ
         //選択肢ボタンをクリックしたら音声を再生
         private async void dummy_Click(object sender, RoutedEventArgs e)
         {
-            //talking(((Button)sender).Content.ToString());
+            talking(((Button)sender).Content.ToString());
 
             string answer=((Button)QuestionFrame.Children[CurrentWordcnt]).Content.ToString();
             string select=((Button)sender).Content.ToString();
             if ( answer==select)
             {
-               // MessageBox.Show("正解!!");
-                right.PlaySync();
+                //right.PlaySync();
                 ((Button)QuestionFrame.Children[CurrentWordcnt]).IsEnabled = false;
                 
                 CurrentWordcnt++;
@@ -210,8 +209,7 @@ namespace 養護学校アプリ
             }
             else
             {
-                //MessageBox.Show("不正解!!");
-                wrong.Play();
+               // wrong.Play();
             }
         }
 
