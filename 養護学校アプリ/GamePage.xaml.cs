@@ -32,24 +32,18 @@ namespace 養護学校アプリ
 
         public GamePage()
         {
-            FileRead fr = new FileRead();
-            QuestionText = fr.showResult();
             InitializeComponent();
-            gen_question();
-            
-            
-            
-            
+            FileRead fr = new FileRead();   //単語リスト読み込みのインスタンスの生成
+            QuestionText = fr.showResult();     //単語リストを読み込んで配列に格納           
+            gen_question();                 //問題を画面に表示
             shuffle(); //シャッフル
-            
-
         }
         //
         //グリッドを問題テキストの文字数だけ均等に分割（カラム）・カラムに問題の文字を一文字ずつ割り当て
         //特にいじる必要もないので変数やfor文に関する説明は割愛します
         private void gen_question()
         {
-            //deden.Play();
+            deden.Play();
             int ColumnNum = QuestionText[CurrentQuestionCnt].Length;
             ColumnDefinition[] ColumnArray = new ColumnDefinition[ColumnNum];
             QuestionFrame.ColumnDefinitions.Clear();
@@ -61,8 +55,8 @@ namespace 養護学校アプリ
                 btn.Content = QuestionText[CurrentQuestionCnt][i];
                 btn.Style = this.FindResource("ButtonStyle2") as Style;
                 btn.Name = "btn" + i;
-                btn.Height = 200-(ColumnArray.Length*4);
-                btn.Width = btn.Height;
+                btn.Width = 200-(ColumnArray.Length*4);
+                btn.Height =btn.Width ;                
                 btn.Click += new RoutedEventHandler(Question_Click);
                 btn.HorizontalAlignment = HorizontalAlignment.Center;
                 QuestionFrame.ColumnDefinitions.Add(ColumnArray[i]);
@@ -101,10 +95,8 @@ namespace 養護学校アプリ
                 btn.Width = 100;
                 btn.Height = 100;
                 btn.FontSize = 50;
-
                 ((Button)dummyCanvas.Children[i]).Margin = new Thickness(btnX, btnY, 0, 0);
                 plusXresult += plusX;
-
             }
         }
 
@@ -119,22 +111,16 @@ namespace 養護学校アプリ
            
             List<char> dummysList=new List<char>();     //addとかremoveを使いたいのでListにします
             List<char> gen_chars = new List<char>();    //
-
-
             
             foreach(char c in dummysArray){     //
                 dummysList.Add(c);              //char型配列のダミー達を全部リストに収容
             }                                   //
-
-
 
             foreach (char c in questionArray)   //
             {                                   //
                 dummysList.Remove(c);           //問題の文字達とダブったダミー達は削除
                 gen_chars.Add(c);               //問題の文字達をリストに収容
             }                                   //
-
-
 
             Random rnd=new Random();    //randomオブジェクトの生成
 
@@ -162,7 +148,6 @@ namespace 養護学校アプリ
                 gen_Chars[i] = gen_Chars[randomIndex];                  //
                 gen_Chars[randomIndex] = temp;                          //
             }                                                           //
-
 
             return gen_Chars;           //ダミー達と問題の文字達をグチャグチャにした配列を返します
 
@@ -228,25 +213,16 @@ namespace 養護学校アプリ
             }
             CurrentWordcnt = 0;
             QuestionFrame.Children.Clear();
-            dummyCanvas.Children.Clear();
-            
+            dummyCanvas.Children.Clear();            
             gen_question();
-            shuffle();
-
-            
-            
+            shuffle();        
         }
-
 
         //音声合成を再生
         public void talking(string str)
         {
             AquesTalk.Play(str,100);
         }
-
-
-        
-
 
     }
 }
