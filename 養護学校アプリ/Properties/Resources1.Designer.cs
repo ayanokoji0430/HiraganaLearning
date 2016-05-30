@@ -72,18 +72,18 @@ namespace 養護学校アプリ.Properties {
         /// <summary>
         ///   System.IO.MemoryStream に類似した型 System.IO.UnmanagedMemoryStream のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.IO.UnmanagedMemoryStream Complete {
+        internal static System.IO.UnmanagedMemoryStream Complete3 {
             get {
-                return ResourceManager.GetStream("Complete", resourceCulture);
+                return ResourceManager.GetStream("Complete3", resourceCulture);
             }
         }
         
         /// <summary>
         ///   System.IO.MemoryStream に類似した型 System.IO.UnmanagedMemoryStream のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.IO.UnmanagedMemoryStream deden {
+        internal static System.IO.UnmanagedMemoryStream deden2 {
             get {
-                return ResourceManager.GetStream("deden", resourceCulture);
+                return ResourceManager.GetStream("deden2", resourceCulture);
             }
         }
         

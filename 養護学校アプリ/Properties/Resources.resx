@@ -124,10 +124,10 @@
   <data name="_out" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\out.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Complete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Complete.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Complete3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Complete3.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="deden" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\deden.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="deden2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\deden2.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

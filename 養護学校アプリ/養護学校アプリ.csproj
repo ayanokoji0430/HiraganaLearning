@@ -142,12 +142,6 @@
     <None Include="Resources\safe.wav" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Complete.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\deden.wav" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="ひらがな.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -161,8 +155,13 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\deden2.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Complete3.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

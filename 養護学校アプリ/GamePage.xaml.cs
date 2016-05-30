@@ -27,8 +27,8 @@ namespace 養護学校アプリ
         private int CurrentQuestionCnt = 0; //現在の問題番号
         private SoundPlayer wrong = new SoundPlayer(Properties.Resources._out);
         private SoundPlayer right = new SoundPlayer(Properties.Resources.safe);
-        private SoundPlayer complete = new SoundPlayer(Properties.Resources.Complete);
-        private SoundPlayer deden = new SoundPlayer(Properties.Resources.deden);
+        private SoundPlayer complete = new SoundPlayer(Properties.Resources.Complete3);
+        private SoundPlayer deden = new SoundPlayer(Properties.Resources.deden2);
 
         public GamePage()
         {
@@ -43,7 +43,7 @@ namespace 養護学校アプリ
         //特にいじる必要もないので変数やfor文に関する説明は割愛します
         private void gen_question()
         {
-            deden.Play();
+           // deden.Play();
             int ColumnNum = QuestionText[CurrentQuestionCnt].Length;
             ColumnDefinition[] ColumnArray = new ColumnDefinition[ColumnNum];
             QuestionFrame.ColumnDefinitions.Clear();
