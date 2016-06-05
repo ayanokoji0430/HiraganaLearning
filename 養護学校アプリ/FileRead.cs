@@ -10,26 +10,27 @@ namespace 養護学校アプリ
     {
         private List<string> result = new List<string>() ;
         public FileRead() {
-            
 
+            System.IO.StreamReader cReader;
             try
             {
-                System.IO.StreamReader cReader = (
+                cReader = (
                 new System.IO.StreamReader("Question.txt", System.Text.Encoding.Default)
             );
-                while (cReader.Peek() >= 0)
-                {
-                    result.Add(cReader.ReadLine());
-
-                }
-                cReader.Close();
             }
             catch
             {
                 string[] s={"さかな","とりにく","いす","つくえ","ちくわ"};
                 result.AddRange(s);
-                
+                return;
             }
+
+            while (cReader.Peek() >= 0)
+            {
+                result.Add(cReader.ReadLine());
+
+            }
+            cReader.Close();
         
         }
 

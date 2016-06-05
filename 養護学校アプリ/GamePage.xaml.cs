@@ -25,18 +25,19 @@ namespace 養護学校アプリ
        // private List<Button> questionList;  //問題のテキストを一文字ずついれるリスト
         private string[] QuestionText; //問題のテキスト。ファイルから読み込む
         private int CurrentQuestionCnt = 0; //現在の問題番号
-        private SoundPlayer wrong = new SoundPlayer(Properties.Resources._out);
-        private SoundPlayer right = new SoundPlayer(Properties.Resources.safe);
         private SoundPlayer complete = new SoundPlayer(Properties.Resources.Complete3);
         private SoundPlayer deden = new SoundPlayer(Properties.Resources.deden2);
 
         public GamePage()
         {
+            
             InitializeComponent();
+            this.DataContext = new Colors_Setup();
             FileRead fr = new FileRead();   //単語リスト読み込みのインスタンスの生成
-            QuestionText = fr.showResult();     //単語リストを読み込んで配列に格納           
+            QuestionText = fr.showResult();     //単語リストを読み込んで配列に格納 
             gen_question();                 //問題を画面に表示
             shuffle(); //シャッフル
+            
         }
         //
         //グリッドを問題テキストの文字数だけ均等に分割（カラム）・カラムに問題の文字を一文字ずつ割り当て
@@ -53,10 +54,10 @@ namespace 養護学校アプリ
                 Button btn = new Button();
                 btn.FontSize = 120;
                 btn.Content = QuestionText[CurrentQuestionCnt][i];
-                btn.Style = this.FindResource("ButtonStyle2") as Style;
+                btn.Style = this.FindResource("ButtonStyle1") as Style;
                 btn.Name = "btn" + i;
                 btn.Width = 200-(ColumnArray.Length*4);
-                btn.Height =btn.Width ;                
+                btn.Height =btn.Width ;     
                 btn.Click += new RoutedEventHandler(Question_Click);
                 btn.HorizontalAlignment = HorizontalAlignment.Center;
                 QuestionFrame.ColumnDefinitions.Add(ColumnArray[i]);
@@ -86,7 +87,7 @@ namespace 養護学校アプリ
                 int btnX = 0;
                 btnX = rnd.Next(plusXresult - plusX, plusXresult - 100);
                 Button btn = new Button();
-                btn.Style = this.FindResource("ButtonStyle1") as Style;
+                btn.Style = this.FindResource("ButtonStyle2") as Style;
                 btn.Name = "dummybtn" + buttoncnt;
                 btn.Click+= new RoutedEventHandler(dummy_Click);
                 int btnY = rnd.Next(((int)((Canvas)dummyCanvas).Height) - 100);
@@ -159,6 +160,7 @@ namespace 養護学校アプリ
         private void Question_Click(object sender, RoutedEventArgs e)
         {
             talking(((Button)sender).Content.ToString());
+            
         }
 
         //選択肢ボタンをクリックしたら音声を再生
@@ -204,6 +206,7 @@ namespace 養護学校アプリ
             for (int i = 0; i < dummyCanvas.Children.Count; i++)
             {
                 ((Button)dummyCanvas.Children[i]).IsEnabled = false;
+               
             }
             CurrentQuestionCnt++;
             if (CurrentQuestionCnt >= QuestionText.Length)
@@ -223,6 +226,13 @@ namespace 養護学校アプリ
         {
             AquesTalk.Play(str,100);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+        
 
     }
 }

@@ -5,26 +5,28 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="1300"
+     
 	Title="GamePage">
     <Page.Resources>
         <ResourceDictionary>
             <Style x:Key="ButtonStyle1" TargetType="{x:Type Button}">
+                <Setter Property="Foreground" Value="{Binding Questions_WordColor}" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Button}">
                             <Grid>
-                                <Ellipse x:Name="ellipse" Fill="#FFFFC780" Stroke="Black" Stretch="Uniform" HorizontalAlignment="Stretch" />
-                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                <Ellipse x:Name="ellipse" Fill="{Binding QuestionsColor}" Stroke="Transparent" Stretch="Uniform" HorizontalAlignment="Stretch" />
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                             </Grid>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsFocused" Value="True"/>
                                 <Trigger Property="IsDefaulted" Value="True"/>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Fill" TargetName="ellipse" Value="#FFEAFDA6"/>
+                                    <Setter Property="Fill" TargetName="ellipse" Value="{Binding MouseOver_QuestionsColor}"/>
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="True"/>
                                 <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Fill" TargetName="ellipse" Value="#FF9B9A9A"/>
+                                    <Setter Property="Fill" TargetName="ellipse" Value="#FFAAAAAA"/>
                                 </Trigger>
 
                             </ControlTemplate.Triggers>
@@ -33,24 +35,47 @@
                 </Setter>
             </Style>
             <Style x:Key="ButtonStyle2" TargetType="{x:Type Button}">
+                <Setter Property="Foreground" Value="{Binding Choices_WordColor}" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Button}">
                             <Grid>
-                                <Ellipse x:Name="ellipse" Fill="#FF86E146" Stroke="Black" Stretch="Uniform" HorizontalAlignment="Stretch" />
+                                <Ellipse x:Name="ellipse" Fill="{Binding ChoicesColor}" Stroke="Transparent" Stretch="Uniform" HorizontalAlignment="Stretch" />
                                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                             </Grid>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsFocused" Value="True"/>
                                 <Trigger Property="IsDefaulted" Value="True"/>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Fill" TargetName="ellipse" Value="#FFEAFDA6"/>
+                                    <Setter Property="Fill" TargetName="ellipse" Value="{Binding MouseOver_ChoicesColor}"/>
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="True"/>
                                 <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Fill" TargetName="ellipse" Value="#FF9B9A9A"/>
+                                    <Setter Property="Fill" TargetName="ellipse" Value="#FFA2A2A1"/>
                                 </Trigger>
 
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="ButtonStyle3" TargetType="{x:Type Button}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Grid>
+                                <Ellipse x:Name="ellipse" Fill="#FFE21313" Stroke="{x:Null}"/>
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsDefault" Value="False"/>
+                                <Trigger Property="IsFocused" Value="True"/>
+                                <Trigger Property="IsDefaulted" Value="True"/>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Fill" TargetName="ellipse" Value="#FFFFBAA5"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True"/>
+                                <Trigger Property="IsEnabled" Value="False"/>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
@@ -59,13 +84,19 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid Background="Azure">
-        <Grid Name="QuestionFrame" HorizontalAlignment="Left" Height="231" Margin="3,37,0,0" VerticalAlignment="Top" Width="1287">
+    <Grid Background="{Binding BackgroundColor}" Margin="-1,0,1,0">
+
+        <Grid Name="QuestionFrame" HorizontalAlignment="Left" Height="215" Margin="3,97,0,0" VerticalAlignment="Top" Width="1287">
+
             <Grid.ColumnDefinitions >
 
             </Grid.ColumnDefinitions>
         </Grid>
-        <Canvas Name="dummyCanvas" HorizontalAlignment="Left" Height="338" Margin="59,317,0,0" VerticalAlignment="Top" Width="1198"/>
 
+        <Canvas Name="dummyCanvas" HorizontalAlignment="Left" Height="338" Margin="59,317,0,0" VerticalAlignment="Top" Width="1198">
+
+        </Canvas>
+        <Button Content="✖" FontSize="30" HorizontalAlignment="Left" Margin="1256,6,0,0" VerticalAlignment="Top" Width="38" Style="{DynamicResource ButtonStyle3}" Height="38" Foreground="White" Click="Button_Click"/>
     </Grid>
+
 </Page>

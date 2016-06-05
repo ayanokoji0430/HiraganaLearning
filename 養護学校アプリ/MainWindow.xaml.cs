@@ -33,5 +33,10 @@ namespace 養護学校アプリ
         {
             _navi.Navigate(new Uri("GamePAge.xaml", UriKind.Relative));
         }
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+            DragMove();
+        }
     }
 }
