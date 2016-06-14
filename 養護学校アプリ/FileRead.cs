@@ -24,11 +24,15 @@ namespace 養護学校アプリ
                 result.AddRange(s);
                 return;
             }
-
-            while (cReader.Peek() >= 0)
+            if (cReader.EndOfStream)
             {
-                result.Add(cReader.ReadLine());
-
+                string[] s = { "さかな", "とりにく", "いす", "つくえ", "ちくわ" };
+                result.AddRange(s);
+            }else{
+                while (cReader.Peek() >= 0)
+                {
+                    result.Add(cReader.ReadLine());
+                }
             }
             cReader.Close();
         
@@ -36,7 +40,7 @@ namespace 養護学校アプリ
 
         public string[] showResult()
         {
-            string[] sArray=result.ToArray();
+            string[] sArray = result.OrderBy(i => Guid.NewGuid()).ToArray();
             return sArray;
         }
     }

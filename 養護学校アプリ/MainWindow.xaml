@@ -4,7 +4,7 @@
         AllowsTransparency="True"
         Background="Transparent"
         WindowStyle="None"
-        Title="MainWindow" Height="700" Width="1300">
+        Title="MainWindow" Height="700" Width="1300" ResizeMode="NoResize">
     <Grid>
         <Frame Name="myFrame" Loaded="myFrame_Loaded"/>
     </Grid>

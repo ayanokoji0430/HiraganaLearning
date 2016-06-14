@@ -44,7 +44,7 @@ namespace 養護学校アプリ
         //特にいじる必要もないので変数やfor文に関する説明は割愛します
         private void gen_question()
         {
-           // deden.Play();
+            deden.Play();
             int ColumnNum = QuestionText[CurrentQuestionCnt].Length;
             ColumnDefinition[] ColumnArray = new ColumnDefinition[ColumnNum];
             QuestionFrame.ColumnDefinitions.Clear();
@@ -84,8 +84,7 @@ namespace 養護学校アプリ
             for (int i = 0; i < buttoncnt; i++)
             {
 
-                int btnX = 0;
-                btnX = rnd.Next(plusXresult - plusX, plusXresult - 100);
+                int btnX = rnd.Next(plusXresult - plusX, plusXresult - 100);
                 Button btn = new Button();
                 btn.Style = this.FindResource("ButtonStyle2") as Style;
                 btn.Name = "dummybtn" + buttoncnt;
@@ -112,11 +111,9 @@ namespace 養護学校アプリ
            
             List<char> dummysList=new List<char>();     //addとかremoveを使いたいのでListにします
             List<char> gen_chars = new List<char>();    //
-            
-            foreach(char c in dummysArray){     //
-                dummysList.Add(c);              //char型配列のダミー達を全部リストに収容
-            }                                   //
 
+            dummysList = dummysArray.ToList();    //char型配列のダミー達を全部リストに収容
+           
             foreach (char c in questionArray)   //
             {                                   //
                 dummysList.Remove(c);           //問題の文字達とダブったダミー達は削除
@@ -132,8 +129,8 @@ namespace 養護学校アプリ
             for (int i=0; i < dummyExtract.Length; i++)                             //                         
             {                                                                       //
                 dummyExtract[i] = dummysList[rnd.Next(0,dummysList.Count-1)];       //表舞台に出るダミー達をランダムに選抜
-            }                                                                       //
-
+            }                                                                      //
+            
             foreach (char c in dummyExtract)                                        //
             {                                                                       //
                 gen_chars.Add(c);                                                   //問題の文字達が入ったリストにダミーをおまけで追加

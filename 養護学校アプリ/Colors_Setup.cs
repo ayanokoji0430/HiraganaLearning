@@ -102,6 +102,13 @@ namespace 養護学校アプリ
 
         public Colors_Setup()
         {
+            QuestionsColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Gray"));
+            MouseOver_QuestionsColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("SkyBlue"));
+            ChoicesColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Gray"));
+            MouseOver_ChoicesColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("SkyBlue"));
+            BackgroundColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("White"));
+            Questions_WordColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Black"));
+            Choices_WordColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Black"));
 
             setup_Read();
         }
@@ -119,18 +126,26 @@ namespace 養護学校アプリ
 
         private void setup_Read()
         {
-            if (!File.Exists(setup_filePath)) File.Create(setup_filePath);
-            using (StreamReader sr = new StreamReader(setup_filePath))
-            {
-                QuestionsColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(sr.ReadLine() ?? "Green"));
-                MouseOver_QuestionsColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(sr.ReadLine() ?? "SkyBlue"));
-                ChoicesColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(sr.ReadLine() ?? "LightGreen"));
-                MouseOver_ChoicesColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(sr.ReadLine() ?? "SkyBlue"));
-                BackgroundColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(sr.ReadLine() ?? "Azure"));
-                Questions_WordColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(sr.ReadLine() ?? "Black"));
-                Choices_WordColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(sr.ReadLine() ?? "Black"));
+            
 
+
+            StreamReader sr = null;
+
+            try
+            {
+                sr = new StreamReader(setup_filePath);
             }
+            catch
+            {
+                return;
+            }
+            QuestionsColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(sr.ReadLine() ?? "Gray"));
+            MouseOver_QuestionsColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(sr.ReadLine() ?? "SkyBlue"));
+            ChoicesColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(sr.ReadLine() ?? "Gray"));
+            MouseOver_ChoicesColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(sr.ReadLine() ?? "SkyBlue"));
+            BackgroundColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(sr.ReadLine() ?? "White"));
+            Questions_WordColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(sr.ReadLine() ?? "Black"));
+            Choices_WordColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(sr.ReadLine() ?? "Black"));
         }
 
 
