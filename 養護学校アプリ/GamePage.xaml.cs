@@ -29,7 +29,7 @@ namespace 養護学校アプリ
         private SoundPlayer complete = new SoundPlayer(Properties.Resources.Complete3);
         private SoundPlayer deden = new SoundPlayer(Properties.Resources.deden2);
 
-        private Hashtable Wrong_Words = new Hashtable();
+        private Hashtable Wrong_Words = new Hashtable();    //問題の単語をキーにした誤答を格納するハッシュテーブル
 
         public GamePage()
         {
@@ -235,7 +235,7 @@ namespace 養護学校アプリ
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             ResultWrite rw = new ResultWrite();
-            rw.ResultWriter(Wrong_Words,QuestionText);
+            rw.ResultWriter(Wrong_Words,QuestionText);      //誤答のハッシュテーブルと問題の単語を書き出す
 
             Environment.Exit(0);
         }
