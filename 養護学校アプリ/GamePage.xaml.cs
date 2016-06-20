@@ -6,6 +6,7 @@ using System.Media;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Collections;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -28,6 +29,8 @@ namespace 養護学校アプリ
         private SoundPlayer complete = new SoundPlayer(Properties.Resources.Complete3);
         private SoundPlayer deden = new SoundPlayer(Properties.Resources.deden2);
 
+        private Hashtable Wrong_Words = new Hashtable();
+
         public GamePage()
         {
             
@@ -35,6 +38,8 @@ namespace 養護学校アプリ
             this.DataContext = new Colors_Setup();
             FileRead fr = new FileRead();   //単語リスト読み込みのインスタンスの生成
             QuestionText = fr.showResult();     //単語リストを読み込んで配列に格納 
+            foreach (string word in QuestionText) Wrong_Words.Add(word,"");
+            
             gen_question();                 //問題を画面に表示
             shuffle(); //シャッフル
             
@@ -194,6 +199,9 @@ namespace 養護学校アプリ
             else
             {
                // wrong.Play();
+               
+                Wrong_Words[QuestionText[CurrentQuestionCnt]] +=answer + "=>" + select+",";
+               // MessageBox.Show(Wrong_Words[QuestionText[CurrentQuestionCnt]].ToString());
             }
         }
 
@@ -226,6 +234,9 @@ namespace 養護学校アプリ
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            ResultWrite rw = new ResultWrite();
+            rw.ResultWriter(Wrong_Words,QuestionText);
+
             Environment.Exit(0);
         }
 
