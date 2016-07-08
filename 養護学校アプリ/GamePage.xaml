@@ -86,7 +86,7 @@
 
     <Grid Background="{Binding BackgroundColor}" Margin="-1,0,1,0">
 
-        <Grid Name="QuestionFrame" HorizontalAlignment="Left" Height="215" Margin="3,97,0,0" VerticalAlignment="Top" Width="1287">
+        <Grid Name="QuestionFrame" HorizontalAlignment="Left" Height="215" Margin="3,97,0,0" VerticalAlignment="Top" Width="1040">
 
             <Grid.ColumnDefinitions >
 

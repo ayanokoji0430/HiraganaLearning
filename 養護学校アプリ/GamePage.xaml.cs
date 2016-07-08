@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Runtime.InteropServices;
 
 namespace 養護学校アプリ
 {
@@ -22,6 +23,9 @@ namespace 養護学校アプリ
     /// </summary>
     public partial class GamePage : Page
     {
+        [DllImport("MikoVoice.dll", CharSet = CharSet.Unicode)]
+        private extern static int MikoVoiceOutSync(string text);
+
         private int CurrentWordcnt=0;  //現在フォーカスが当たっている文字の番号
        // private List<Button> questionList;  //問題のテキストを一文字ずついれるリスト
         private string[] QuestionText; //問題のテキスト。ファイルから読み込む
@@ -229,7 +233,7 @@ namespace 養護学校アプリ
         //音声合成を再生
         public void talking(string str)
         {
-            AquesTalk.Play(str,100);
+            MikoVoiceOutSync(str);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
