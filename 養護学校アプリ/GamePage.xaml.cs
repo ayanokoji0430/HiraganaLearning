@@ -53,7 +53,7 @@ namespace 養護学校アプリ
         //特にいじる必要もないので変数やfor文に関する説明は割愛します
         private void gen_question()
         {
-            deden.Play();
+            //deden.Play();
             int ColumnNum = QuestionText[CurrentQuestionCnt].Length;
             ColumnDefinition[] ColumnArray = new ColumnDefinition[ColumnNum];
             QuestionFrame.ColumnDefinitions.Clear();
@@ -125,8 +125,8 @@ namespace 養護学校アプリ
            
             foreach (char c in questionArray)   //
             {                                   //
-                dummysList.Remove(c);           //問題の文字達とダブったダミー達は削除
-                gen_chars.Add(c);               //問題の文字達をリストに収容
+                dummysList.Remove(c);           //正答とダブったダミー達は削除
+                gen_chars.Add(c);               //正答リストに収容
             }                                   //
 
             Random rnd=new Random();    //randomオブジェクトの生成
@@ -138,25 +138,20 @@ namespace 養護学校アプリ
             for (int i=0; i < dummyExtract.Length; i++)                             //                         
             {                                                                       //
                 dummyExtract[i] = dummysList[rnd.Next(0,dummysList.Count-1)];       //表舞台に出るダミー達をランダムに選抜
-            }                                                                      //
-            
-            foreach (char c in dummyExtract)                                        //
-            {                                                                       //
-                gen_chars.Add(c);                                                   //問題の文字達が入ったリストにダミーをおまけで追加
-            }                                                                       // 
+            }                                                                       //
 
-            char[] gen_Chars = gen_chars.ToArray();                         //ダミーと問題の文字が入ったリストをchar型の配列に変換
+            gen_chars.AddRange(dummyExtract);   //正答とダミーを連結            
 
 
-            for (int i = 0; i < gen_Chars.Length; i++)                  //
+            for (int i = 0; i < gen_chars.Count; i++)                   //
             {                                                           //
-                char temp = gen_Chars[i];                               //
-                int randomIndex = rnd.Next(0, gen_Chars.Length);        //配列をシャッフルしてダミーと問題の文字を混ぜます
-                gen_Chars[i] = gen_Chars[randomIndex];                  //
-                gen_Chars[randomIndex] = temp;                          //
+                char temp = gen_chars[i];                               //
+                int randomIndex = rnd.Next(0, gen_chars.Count-1);       //配列をシャッフルしてダミーと正答を混ぜます
+                gen_chars[i] = gen_chars[randomIndex];                  //
+                gen_chars[randomIndex] = temp;                          //
             }                                                           //
 
-            return gen_Chars;           //ダミー達と問題の文字達をグチャグチャにした配列を返します
+            return gen_chars.ToArray();           //ダミー達と正答をグチャグチャにした配列を返します
 
         }
 
