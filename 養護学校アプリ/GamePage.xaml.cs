@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Runtime.InteropServices;
 
+
 namespace 養護学校アプリ
 {
     /// <summary>
@@ -29,7 +30,9 @@ namespace 養護学校アプリ
         private int CurrentWordcnt=0;  //現在フォーカスが当たっている文字の番号
        // private List<Button> questionList;  //問題のテキストを一文字ずついれるリスト
         private string[] QuestionText; //問題のテキスト。ファイルから読み込む
+        private BitmapImage[] QuestionImage;
         private int CurrentQuestionCnt = 0; //現在の問題番号
+        private string escapeStr;
         private SoundPlayer complete = new SoundPlayer(Properties.Resources.Complete3);
         private SoundPlayer deden = new SoundPlayer(Properties.Resources.deden2);
 
@@ -42,10 +45,15 @@ namespace 養護学校アプリ
             this.DataContext = new Colors_Setup();
             FileRead fr = new FileRead();   //単語リスト読み込みのインスタンスの生成
             QuestionText = fr.showResult();     //単語リストを読み込んで配列に格納 
-            foreach (string word in QuestionText) Wrong_Words.Add(word,"");
-            
+            QuestionImage = fr.showImg_Result();
+            foreach (string word in QuestionText)
+                foreach (var key in Wrong_Words)
+                {
+                    if (key == word) break;
+                }
             gen_question();                 //問題を画面に表示
             shuffle(); //シャッフル
+            q_image.Source = QuestionImage[CurrentQuestionCnt];
             
         }
         //
@@ -54,7 +62,8 @@ namespace 養護学校アプリ
         private void gen_question()
         {
             //deden.Play();
-            int ColumnNum = QuestionText[CurrentQuestionCnt].Length;
+            escapeStr = string.Join("", QuestionText[CurrentQuestionCnt].Split('^','＾'));
+            int ColumnNum = escapeStr.Length;
             ColumnDefinition[] ColumnArray = new ColumnDefinition[ColumnNum];
             QuestionFrame.ColumnDefinitions.Clear();
             for (int i = 0; i < ColumnNum; i++)
@@ -62,7 +71,7 @@ namespace 養護学校アプリ
                 ColumnArray[i] = new ColumnDefinition();
                 Button btn = new Button();
                 btn.FontSize = 120;
-                btn.Content = QuestionText[CurrentQuestionCnt][i];
+                btn.Content = escapeStr[i];
                 btn.Style = this.FindResource("ButtonStyle1") as Style;
                 btn.Name = "btn" + i;
                 btn.Width = 200-(ColumnArray.Length*4);
@@ -114,9 +123,10 @@ namespace 養護学校アプリ
         //                                                                          //
         private char[] dummy_gen()
         {
-            char[] questionArray = QuestionText[CurrentQuestionCnt].ToCharArray();      //問題のテキストをchar型に変換
-            string dummys = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもられるれろやゆよわをん";  //ダミーになる文字達
-            char[] dummysArray = dummys.ToCharArray();      //ダミー達、stringからchar配列に変身
+            
+            char[] questionArray = (string.Join("",  QuestionText[CurrentQuestionCnt].Split('^','＾'))).ToCharArray();   //問題のテキストをchar型に変換
+            char[] dummysArray = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもられるれろやゆよわをん".ToCharArray();  //ダミーになる文字達
+            
            
             List<char> dummysList=new List<char>();     //addとかremoveを使いたいのでListにします
             List<char> gen_chars = new List<char>();    //
@@ -132,7 +142,7 @@ namespace 養護学校アプリ
             Random rnd=new Random();    //randomオブジェクトの生成
 
 
-            char[] dummyExtract = new char[7 - QuestionText[CurrentQuestionCnt].Length];  //実際に表舞台に出るダミー達の配列
+            char[] dummyExtract = new char[7 - questionArray.Length];  //実際に表舞台に出るダミー達の配列
 
 
             for (int i=0; i < dummyExtract.Length; i++)                             //                         
@@ -168,8 +178,10 @@ namespace 養護学校アプリ
         private async void dummy_Click(object sender, RoutedEventArgs e)
         {
             talking(((Button)sender).Content.ToString());
-
-            string answer=((Button)QuestionFrame.Children[CurrentWordcnt]).Content.ToString();
+            /*
+            string answer=((Button)QuestionFrame.Children[CurrentWordcnt]).Content.ToString();//ここで例外発生
+            */
+            string answer = QuestionText[CurrentQuestionCnt][CurrentWordcnt].ToString();
             string select=((Button)sender).Content.ToString();
             if ( answer==select)
             {
@@ -177,7 +189,7 @@ namespace 養護学校アプリ
                 ((Button)QuestionFrame.Children[CurrentWordcnt]).IsEnabled = false;
                 
                 CurrentWordcnt++;
-                if (CurrentWordcnt < QuestionText[CurrentQuestionCnt].Length)
+                if (CurrentWordcnt < escapeStr.Length)
                 {
                     ((Button)QuestionFrame.Children[CurrentWordcnt]).IsEnabled = true;
                     ((Button)sender).IsEnabled = false;
@@ -199,7 +211,7 @@ namespace 養護学校アプリ
             {
                // wrong.Play();
                
-                Wrong_Words[QuestionText[CurrentQuestionCnt]] +=answer + "=>" + select+",";
+                Wrong_Words[QuestionText[CurrentQuestionCnt]] +="『"+answer + "』のとき『" + select+"』,";
                // MessageBox.Show(Wrong_Words[QuestionText[CurrentQuestionCnt]].ToString());
             }
         }
@@ -222,7 +234,8 @@ namespace 養護学校アプリ
             QuestionFrame.Children.Clear();
             dummyCanvas.Children.Clear();            
             gen_question();
-            shuffle();        
+            shuffle();
+            q_image.Source = QuestionImage[CurrentQuestionCnt];
         }
 
         //音声合成を再生
