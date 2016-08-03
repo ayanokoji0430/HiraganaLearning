@@ -12,8 +12,21 @@ namespace 養護学校アプリ
     {
         public void ResultWriter(Hashtable Wrong_Words,string[] Question_Words)
         {
-            StreamWriter writer =new StreamWriter(@"result.txt",false);
-            foreach (string word in Question_Words)
+            StreamWriter writer =new StreamWriter(System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)+"/result.txt",false);
+
+            var unique = new List<string>();
+
+            foreach (var word in Question_Words)
+            {
+                //コレクション内に存在していなければ、追加する
+                if (!unique.Contains(word))
+                {
+                    unique.Add(word);
+                }
+            }
+
+
+            foreach (string word in unique)
             {
                 writer.WriteLine(word);
                 writer.WriteLine((string)Wrong_Words[word]);

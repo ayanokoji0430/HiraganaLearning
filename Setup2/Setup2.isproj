@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Project ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<!-- Select a Product Configuration -->
+		<InstallShieldProductConfiguration>Express</InstallShieldProductConfiguration>
+		<!-- Select a Visual Studio Configuration / InstallShield Release -->
+		<Configuration>Debug</Configuration>
+		<InstallShieldRelease>$(Configuration)</InstallShieldRelease>
+	</PropertyGroup>
+	<ItemGroup>
+		<!-- The InstallShieldProject item selects the project to build -->
+		<InstallShieldProject Include="$(MSBuildProjectDirectory)\$(MSBuildProjectName).isl"/>
+		<!-- The InstallShieldReleaseFlags sets Release Flags -->
+		<!--<InstallShieldReleaseFlags Include=""/>-->
+		<!-- The InstallShieldMergeModulePath specifies what directories are
+		searched for Merge Modules -->
+		<!--<InstallShieldMergeModulePath Include=""/>-->
+	</ItemGroup>
+	<ItemGroup>
+		<!-- The ProjectReference items refer to any Visual Studio solutions you want to automatically probe for Project Output Groups.  -->
+	</ItemGroup>
+	<ItemGroup>
+		<!-- The TaggedOutputs items allow you to explicitly add extra files to output groups. Each item must include both Name and OutputGroup, as well as TargetPath metadata values. -->
+		<!--<TaggedOutputs Include="C:\My Test Exe.exe">
+			<Name>My Test Project</Name>
+			<OutputGroup>Primary output</OutputGroup>
+			<TargetPath>My Test Exe.exe</TargetPath>
+		</TaggedOutputs> -->
+	</ItemGroup>
+	<Import Project="$(MSBuildExtensionsPath32)\InstallShield\2015Limited\InstallShield.targets"/>
+	<ItemGroup>
+		<ProjectReference Include="..\..\Hiragana_ColorsSetup\Hiragana_ColorsSetup\Hiragana_ColorsSetup.csproj">
+			<Name>Hiragana_ColorsSetup</Name>
+			<Project>{34EF7AB6-4DCE-40CF-8B26-D051E32DC4DD}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\..\Word_Setup\Word_Setup\Word_Setup.csproj">
+			<Name>Word_Setup</Name>
+			<Project>{BDE9AB14-9792-4D61-8D55-71982677B246}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\養護学校アプリ\養護学校アプリ.csproj">
+			<Name>養護学校アプリ</Name>
+			<Project>{9239A669-D728-4BF1-BECA-C1D8C925B751}</Project>
+		</ProjectReference>
+	</ItemGroup>
+</Project>

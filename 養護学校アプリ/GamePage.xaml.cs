@@ -46,11 +46,8 @@ namespace 養護学校アプリ
             FileRead fr = new FileRead();   //単語リスト読み込みのインスタンスの生成
             QuestionText = fr.showResult();     //単語リストを読み込んで配列に格納 
             QuestionImage = fr.showImg_Result();
-            foreach (string word in QuestionText)
-                foreach (var key in Wrong_Words)
-                {
-                    if (key == word) break;
-                }
+           
+            
             gen_question();                 //問題を画面に表示
             shuffle(); //シャッフル
             q_image.Source = QuestionImage[CurrentQuestionCnt];
@@ -62,7 +59,7 @@ namespace 養護学校アプリ
         private void gen_question()
         {
             //deden.Play();
-            escapeStr = string.Join("", QuestionText[CurrentQuestionCnt].Split('^','＾'));
+            escapeStr = string.Join("", QuestionText[CurrentQuestionCnt].Split('^'));
             int ColumnNum = escapeStr.Length;
             ColumnDefinition[] ColumnArray = new ColumnDefinition[ColumnNum];
             QuestionFrame.ColumnDefinitions.Clear();
@@ -70,11 +67,11 @@ namespace 養護学校アプリ
             {
                 ColumnArray[i] = new ColumnDefinition();
                 Button btn = new Button();
-                btn.FontSize = 120;
+                btn.FontSize = 100;
                 btn.Content = escapeStr[i];
                 btn.Style = this.FindResource("ButtonStyle1") as Style;
                 btn.Name = "btn" + i;
-                btn.Width = 200-(ColumnArray.Length*4);
+                btn.Width = 180-(ColumnArray.Length*4);
                 btn.Height =btn.Width ;     
                 btn.Click += new RoutedEventHandler(Question_Click);
                 btn.HorizontalAlignment = HorizontalAlignment.Center;
@@ -175,13 +172,10 @@ namespace 養護学校アプリ
         }
 
         //選択肢ボタンをクリックしたら音声を再生
-        private async void dummy_Click(object sender, RoutedEventArgs e)
+        private void dummy_Click(object sender, RoutedEventArgs e)
         {
             talking(((Button)sender).Content.ToString());
-            /*
-            string answer=((Button)QuestionFrame.Children[CurrentWordcnt]).Content.ToString();//ここで例外発生
-            */
-            string answer = QuestionText[CurrentQuestionCnt][CurrentWordcnt].ToString();
+            string answer = escapeStr[CurrentWordcnt].ToString();
             string select=((Button)sender).Content.ToString();
             if ( answer==select)
             {
@@ -198,11 +192,9 @@ namespace 養護学校アプリ
                 else
                 {
                     complete.PlaySync();
-                    await Dispatcher.BeginInvoke(new Action(() =>
-                    {
-                        Task.Run(() => talking(QuestionText[CurrentQuestionCnt]));
-                    }));
-                    await Task.Run(()=>System.Threading.Thread.Sleep(1000));
+                    talking(QuestionText[CurrentQuestionCnt]);
+                    System.Threading.Thread.Sleep(1000);
+                    //await Task.Run(()=>);
                     Next();
 
                 }
@@ -212,7 +204,7 @@ namespace 養護学校アプリ
                // wrong.Play();
                
                 Wrong_Words[QuestionText[CurrentQuestionCnt]] +="『"+answer + "』のとき『" + select+"』,";
-               // MessageBox.Show(Wrong_Words[QuestionText[CurrentQuestionCnt]].ToString());
+
             }
         }
 
@@ -247,7 +239,7 @@ namespace 養護学校アプリ
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             ResultWrite rw = new ResultWrite();
-            rw.ResultWriter(Wrong_Words,QuestionText);      //誤答のハッシュテーブルと問題の単語を書き出す
+            rw.ResultWriter(Wrong_Words, QuestionText);      //誤答のハッシュテーブルと問題の単語を書き出す
 
             Environment.Exit(0);
         }

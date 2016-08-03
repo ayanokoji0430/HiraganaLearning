@@ -150,7 +150,18 @@
     <None Include="Resources\Complete3.wav" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="default_image\" />
+    <Resource Include="default_image\chair.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="default_image\chikuwa.jpg" />
+    <Resource Include="default_image\desk.jpg" />
+    <Resource Include="default_image\chicken.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="default_image\fish.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="default_image\noimage.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
